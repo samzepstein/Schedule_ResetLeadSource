@@ -1,0 +1,22 @@
+@isTest
+public class Test_Schedule_ResetLeadSource {
+    
+    static testMethod void testSchedule_ResetLeadSource(){
+        test.startTest();
+        
+        DateTime dt = system.today() + 71;
+        
+        Account acct = new Account(Name = 'Test acct');
+        
+        insert acct;
+        
+        Lead lead = new Lead(FirstName = 'Test', LastName = 'resetLeadSource', Company = 'Test acct', Account__c = acct.id, LS_3_Timestamp__c = dt); 
+        
+        insert lead;
+        
+        Schedule_ResetLeadSource aTest = new Schedule_ResetLeadSource();
+        String schedule = '10 0 0 * * ?'; 
+        system.schedule('Test Schedule', schedule, aTest);
+        test.stopTest();
+    }
+}
