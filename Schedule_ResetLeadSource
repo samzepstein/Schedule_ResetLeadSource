@@ -1,0 +1,57 @@
+public class Schedule_ResetLeadSource implements Schedulable {
+    
+     public void execute(SchedulableContext SC){
+         
+         DateTime dt = system.today() + 70;
+         
+         system.debug('dt: '+ dt);
+         
+         List<Lead> leadList = [SELECT ID, LS_3_Timestamp__c, IsConverted, Lead_Source_New__c,Lead_Source_Level_3__c, 
+                                Lead_Source_Level_2__c,  First_GLCID__c, First_utm_campaign__c, First_utm_content__c, 
+                                First_utm_medium__c, First_utm_source__c, First_utm_term__c, LS_2_Timestamp__c, LS_New_Timestamp__c
+                                FROM LEAD
+                                WHERE LS_3_Timestamp__c > :dt
+                                AND IsConverted = FALSE];
+         
+         
+         
+         String reset = 'Reset';
+
+
+         
+         
+         for(Lead l  : leadList){
+             
+             l.LS_3_Timestamp__c = NULL;
+             l.LS_2_Timestamp__c  = NULL;
+             l.LS_New_Timestamp__c = NULL;
+             l.Lead_Source_Level_2__c = reset;
+             l.Lead_Source_Level_3__c = reset;
+             l.First_GLCID__c = reset;
+             l.First_utm_campaign__c = reset;
+             l.First_utm_content__c = reset;
+             l.First_utm_medium__c = reset;
+             l.First_utm_source__c = reset;
+             
+             
+	
+             
+             
+             
+             
+             
+             
+         }
+         
+         update leadList;
+         
+         
+
+
+         
+         
+     }
+    
+    
+
+}
